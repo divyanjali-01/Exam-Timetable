@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Timetable Generator | Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f1f5f9;
+            color: #172554;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 245px;
+            background: #101b45;
+            color: white;
+            padding: 28px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 800;
+            padding: 0 12px;
+            margin-bottom: 36px;
+            line-height: 1.5;
+        }
+
+        .brand span {
+            color: #93c5fd;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: #94a3b8;
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 13px 14px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 9px;
+            margin-bottom: 7px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #263b83;
+            color: white;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 20px 12px 0;
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+        }
+
+        .topbar {
+            margin-bottom: 25px;
+        }
+
+        .topbar h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .topbar p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #1d4ed8, #4338ca);
+            color: white;
+            padding: 36px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 12px 28px #1e40af25;
+            margin-bottom: 26px;
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: #bfdbfe;
+        }
+
+        .hero h1 {
+            font-size: clamp(24px, 3vw, 35px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #dbeafe;
+            line-height: 1.7;
+            font-size: 14px;
+            max-width: 600px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            margin-top: 22px;
+            background: white;
+            color: #1d4ed8;
+            text-decoration: none;
+            padding: 13px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .primary-btn:hover {
+            background: #dbeafe;
+            transform: translateY(-1px);
+        }
+
+        .hero-icon {
+            font-size: 65px;
+            opacity: 0.8;
+            padding: 0 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 10px #0f172a05;
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 800;
+            color: #172554;
+            margin-bottom: 9px;
+            overflow-wrap: anywhere;
+        }
+
+        .stat-description {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .section-heading {
+            margin-bottom: 8px;
+            font-size: 21px;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .step-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            padding: 22px;
+        }
+
+        .step-number {
+            color: #2563eb;
+            font-weight: 800;
+            font-size: 12px;
+            margin-bottom: 13px;
+        }
+
+        .step-card h3 {
+            font-size: 15px;
+            margin-bottom: 9px;
+        }
+
+        .step-card p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .step-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .step-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .loading {
+            color: #94a3b8;
+        }
+
+        .status-generated {
+            color: #15803d;
+            font-size: 20px;
+        }
+
+        .status-ready {
+            color: #b45309;
+            font-size: 20px;
+        }
+
+        .error-message {
+            display: none;
+            margin-bottom: 20px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1100px) {
+            .stats,
+            .steps {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .sidebar {
+                width: 210px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 18px;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .nav-link {
+                margin: 0;
+                padding: 10px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main {
+                padding: 18px;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .stats,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            SMART <span>TIMETABLE</span>
+        </div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <nav class="nav-links">
+            <a class="nav-link active" href="index.html">▦ &nbsp; Dashboard</a>
+            <a class="nav-link" href="subjects">▤ &nbsp; Subjects</a>
+            <a class="nav-link" href="slots">◷ &nbsp; Exam Slots</a>
+            <a class="nav-link" href="conflicts">⚠ &nbsp; Conflicts</a>
+            <a class="nav-link" href="timetable">▦ &nbsp; Timetable</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            Smart Timetable Generator<br>
+            Graph Coloring &amp; Backtracking
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <h2>Dashboard</h2>
+            <p>Manage subjects and generate exam schedules.</p>
+        </header>
+
+        <section class="hero">
+            <div>
+                <div class="hero-tag">WELCOME</div>
+                <h1>Plan exams without clashes.</h1>
+                <p>
+                    Use graph coloring and backtracking to create
+                    a conflict-free timetable.
+                </p>
+                <a class="primary-btn" href="timetable">
+                    Generate Timetable &rarr;
+                </a>
+            </div>
+
+            <div class="hero-icon" aria-hidden="true">▦</div>
+        </section>
+
+        <div id="dashboardError" class="error-message">
+            Dashboard data load nahi ho paaya. Check that Tomcat is running
+            and the dashboard-data servlet is deployed.
+        </div>
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-title">Total Subjects</div>
+                <div class="stat-value loading" id="totalSubjects">—</div>
+                <div class="stat-description">Registered subjects</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Exam Slots</div>
+                <div class="stat-value loading" id="totalSlots">—</div>
+                <div class="stat-description">Available time slots</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Conflicts</div>
+                <div class="stat-value loading" id="totalConflicts">—</div>
+                <div class="stat-description">Defined subject clashes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Timetable</div>
+                <div class="stat-value loading" id="timetableStatus">Loading...</div>
+                <div class="stat-description" id="timetableDescription">
+                    Checking timetable status
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <h2 class="section-heading">Get started</h2>
+            <p class="section-description">
+                Follow these steps to create your exam timetable.
+            </p>
+
+            <div class="steps">
+
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Add subjects</h3>
+                    <p>Register all exam subjects in the system.</p>
+                    <a class="step-link" href="subjects">Manage Subjects &rarr;</a>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Create slots</h3>
+                    <p>Set exam dates and start and end times.</p>
+                    <a class="step-link" href="slots">Manage Slots &rarr;</a>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Define conflicts</h3>
+                    <p>Prevent overlapping exams for conflicting subjects.</p>
+                    <a class="step-link" href="conflicts">Manage Conflicts &rarr;</a>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <h3>Generate</h3>
+                    <p>Run the backtracking scheduler and view the result.</p>
+                    <a class="step-link" href="timetable">Generate Timetable &rarr;</a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            Smart Timetable Generator &bull; Powered by Graph Coloring and Backtracking
+        </footer>
+
+    </main>
+</div>
+
+<script>
+    async function loadDashboard() {
+        const errorBox = document.getElementById("dashboardError");
+
+        try {
+            const response = await fetch("dashboard-data", {
+                cache: "no-store"
+            });
+
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
+            }
+
+            const data = await response.json();
+
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            document.getElementById("totalSubjects").textContent =
+                data.subjects;
+
+            document.getElementById("totalSlots").textContent =
+                data.slots;
+
+            document.getElementById("totalConflicts").textContent =
+                data.conflicts;
+
+            const statusElement =
+                document.getElementById("timetableStatus");
+
+            const descriptionElement =
+                document.getElementById("timetableDescription");
+
+            statusElement.textContent = data.status;
+            statusElement.classList.remove(
+                "loading", "status-generated", "status-ready"
+            );
+
+            if (data.status === "Generated") {
+                statusElement.classList.add("status-generated");
+                descriptionElement.textContent =
+                    data.entries + " subjects scheduled";
+            } else {
+                statusElement.classList.add("status-ready");
+                descriptionElement.textContent =
+                    data.entries + " of " + data.subjects +
+                    " subjects scheduled";
+            }
+
+            errorBox.style.display = "none";
+
+        } catch (error) {
+            console.error("Dashboard loading error:", error);
+            errorBox.style.display = "block";
+
+            document.getElementById("timetableStatus").textContent =
+                "Unavailable";
+
+            document.getElementById("timetableDescription").textContent =
+                "Could not load status";
+        }
+    }
+
+    loadDashboard();
+</script>
+
+</body>
+</html>
